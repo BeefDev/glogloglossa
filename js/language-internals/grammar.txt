@@ -1,0 +1,66 @@
+program                     :   PROGRAM IDENTIFIER  constant-definition-section? variable-definition-section? code-section
+
+process                     :   PROCESS IDENTIFIER LEFT_PARENTHESIS (IDENTIFIER (COMMA IDENTIFIER)*)? RIGHT_PARENTHESIS constant-definition-section? variable-definition-section? code-section
+
+function                    :   FUNCTION IDENTIFIER LEFT_PARENTHESIS (IDENTIFIER (COMMA IDENTIFIER)*)? RIGHT_PARENTHESIS SEMICOLON "INTEGER"|"REAL"|"BOOLEAN"|"STRING" constant-definition-section? variable-definition-section? code-section
+
+code-section                :   START statements "END_PROGRAM"|"END_FUNCTION"|"END_PROCESS"
+
+variable-definition-section :   VARIABLES NEWLINE ("INTEGERS"|"REALS"|"STRINGS"|"BOOLEANS" SEMICOLON (IDENTIFIER (COMMA IDENTIFIER)*)? NEWLINE)* NEWLINE?
+
+constant-definition-section :   CONSTANTS NEWLINE (IDENTIFIER EQUALS INTEGER|REAL|STRING|BOOLEAN NEWLINE)* NEWLINE?
+
+statements                  :   NEWLINE* statement (NEWLINE+ statement)* NEWLINE*
+
+statement                   :   if-statement
+                            :   while-statement
+                            :   while-do-statement
+                            :   for-statement
+                            :   process-call
+                            :   function-call
+                            :   write-instruction-call
+                            :   read-instruction-call
+                            :   expression
+
+variable-assign-statement   :   IDENTIFIER ASSIGN expression
+
+expression                  :   comparison-expression (("AND"|"OR") comparison-expression)*
+
+comparison-expression       :   "NOT" comparison-expression
+                            :   basic-expression ((EQUALS|CARROT_LEFT|CARROT_RIGHT|CARROT_LEFT_EQUALS|CARROT_RIGHT_EQUALS) basic-expression)*
+
+basic-expression            :   term ((PLUS|MINUS) factor)*
+
+term                        :   factor ((CARROT) factor)*
+                            :   factor ((STAR|SLASH) factor)*
+                            :   factor (("DIV"|"MOD") factor)*
+
+factor                      :   (PLUS|MINUS)? atom
+
+atom                        :   IDENTIFIER
+                            :   value
+                            :   LEFT_PARENTHESIS expression RIGHT_PARENTHESIS
+                            :   function-call
+
+value                       :   INTEGER|REAL|STRING|BOOLEAN
+
+write-instruction-call      :   "WRITE" (expression (COMMA expression)*)?
+                            :   "WRITE_" (expression (COMMA expression)*)?
+
+read-instruction-call       :   "READ" IDENTIFIER (COMMA, IDENTIFIER)*
+
+process-call                :   "CALL" IDENTIFIER LEFT_PARENTHESIS (expression (COMMA expression)*)? RIGHT_PARENTHESIS
+
+function-call               :   IDENTIFIER LEFT_PARENTHESIS (expression (COMMA expression)*)? RIGHT_PARENTHESIS
+
+if-statement                :   "IF" expression "THEN" statements "END_IF"|if-expression-else-if|if-expression-else
+
+if-statement-else-if        :   "ELSE_IF" expression "THEN" statement "END_IF"|if-expression-else-if|if-expression-else
+
+if-statement-else           :   "ELSE" statements "END_IF"
+
+while-statement             :   "WHILE" expression "REPEAT" (statements)? "END_LOOP"
+
+while-do-statement          :   "START_LOOP" statements "UNTILL" expression
+
+for-statement               :   "FOR" IDENTIFIER "FROM" expression "UNTILL" expression ("STEP" expression)? statements "END_LOOP"

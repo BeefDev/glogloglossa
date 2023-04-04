@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;900&family=Oswald:wght@700&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    font-family: sans-serif;
+}
+
+html {
+    background-color: var(--header-background-color);
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.editor {
+    width: 100%;
+    height: 100%;
+}
+
+.editor * {
+    font-family : monospace !important;
+    direction:ltr !important;
+    text-align:left !important;
+}
+
+.editor-code {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.error-hightlight {
+    background-color: var(--error-highlight-color);
+    position: absolute;
+    z-index: 100;
+}
+
+.error-line-hightlight {
+    background-color: var(--error-line-highlight-color);
+    position: absolute;
+    z-index: 100;
+}
+
+.console {
+    z-index: 99;
+    min-height: 25%;
+    max-height: 25%;
+    border-top: 1px solid var(--console-separator-color);
+    padding: 10px;
+    list-style: none;
+
+    font-family: 'Oswold', sans-serif;
+    overflow: hidden;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+    background-color: var(--console-background-color);
+}
+
+.console .placeholder {
+    font-size: calc(1.5 * var(--console-font-size));
+    font-weight: 600;
+    color: var(--console-placeholder-color);
+    user-select: none;
+}
+
+.console .log-output {
+    color: var(--log-output-color);
+}
+
+.console .log-input {
+    color: var(--log-input-color);
+}
+
+.console .log-error {
+    color: var(--log-error-color);
+}
+
+.console .log-misc {
+    color: var(--log-misc-color);
+}
+
+.console>*:not(.console:last-child) {
+    margin-bottom: 10px;
+}
+
+.console>.input {
+    width: 100%;
+    background-color: var(--console-input-field-color);
+    border: none;
+    outline: none;
+}
+
+.console>* {
+    font-size: var(--console-font-size);
+    font-weight: 500;
+} 
+
+#theme-selector .selected {
+    width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+header {
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: var(--header-background-color);
+    border-bottom: 1px solid var(--console-separator-color);
+}
+
+header .logo {
+    max-width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    user-select: none;
+}
+
+header .logo h1 {
+    color: var(--logo-color);
+    font-size: 40px;
+    font-weight: 900;
+    font-family: 'Oswold', sans-serif;
+}
+
+header .logo p {
+    color: var(--logo-color);
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: lighter;
+    max-width: 40%;
+}
+
+header .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+header .buttons li > * {
+    margin: 0px 10px;
+}
+
+header .buttons #execute-button, header .buttons #compile-button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: box-shadow 200ms
+}
+
+header .buttons #execute-button:hover, header .buttons #compile-button:hover {
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+}
+
+header .buttons #execute-button.execute {
+    background-color: var(--execute-button-background-color);
+    color: var(--execute-button-color);
+}
+
+header .buttons #execute-button.execute:hover {
+    color: var(--execute-button-hover-color);
+    background-color: var(--execute-button-hover-background-color);
+}
+
+header .buttons #execute-button.stop {
+    background-color: var(--stop-button-background-color);
+    color: var(--stop-button-color);
+}
+
+header .buttons #execute-button.stop:hover {
+    color: var(--stop-button-hover-color);
+    background-color: var(--stop-button-hover-background-color);
+}
+
+header .buttons #compile-button[data-compilation="TRUE"] {
+    color: var(--active-compile-button-color);
+    background-color: var(--active-compile-button-background-color);
+}
+
+header .buttons #compile-button[data-compilation="PARTIALLY"] {
+    color: var(--semi-active-compile-button-color);
+    background-color: var(--semi-active-compile-button-background-color);
+}
+
+header .buttons #compile-button[data-compilation="FALSE"] {
+    display: none;
+}
+
+header .buttons .icon {
+    margin-right: 10px;
+}
+
+header .buttons .button {
+    position: relative;
+    color: var(--button-color);
+    border: 2px solid var(--button-color);
+    background-color: var(--button-background-color);
+    outline: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+    transition: color 500ms;
+}
+
+header .buttons .button::before {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    background-color: var(--button-hover-background-color);
+    top: -10%;
+    left: -10%;
+    transform: scaleX(0);
+    z-index: -1;
+    transition: transform 500ms;
+}
+
+header .buttons .button:hover {
+    color: var(--button-hover-color);
+}
+
+header .buttons .button:hover::before {
+    transform: scaleX(1);
+}
+
+header .zoom-buttons .button {
+    padding: 8px 12px;
+    transition: 0ms;
+}
+
+header .zoom-buttons .button:hover {
+    color: var(--button-zoom-hover-color);
+    background-color: var(--button-zoom-hover-background-color);
+}
+
+header .zoom-buttons .button::before {
+    opacity: 0;
+}
+
+header .menu .option, header .menu .option:hover {
+    color: var(--disabled-option-color) !important;
+}
+
+header .menu .option.enabled, header .menu .option.enabled:hover {
+    color: var(--enabled-option-color) !important;
+}
+
+header #extras-menu {
+    opacity: 0;
+}
+
+@media (max-width: 1800px) {
+    header .buttons>li>*>.text, #settings-options .select .text {
+        display: none;
+    }
+
+    header .buttons>li>*>.icon, #settings-options .select .icon{
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1160px) {
+    header .zoom-buttons {
+        display: none;
+    }
+
+    .logo p {
+        display: none;
+    }
+}
+
+@media (max-width: 930px) {
+    .logo {
+        display: none !important;
+    }
+}
+
+@media (max-width: 780px) {
+    #input-file-button {
+        display: none;
+    }
+
+    #compile-button {
+        display: none;  
+    }
+
+    .other-options {
+        display: none;
+    }
+
+    #debug-button {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    #theme-selector {
+        display: none;
+    }
+
+    #settings-options {
+        display: none;
+    }
+}

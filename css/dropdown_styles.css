@@ -1,0 +1,120 @@
+.dropdown * {
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown .select {    
+    color: var(--dropdown-select-color);
+    background-color: var(--dropdown-select-background-color);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 2px var(--dropdown-select-border-color) solid;
+    border-radius: 20px;
+    padding: 1em;
+
+    cursor: pointer;
+    transition: background-color 300ms;
+}
+
+.dropdown .select:hover, .dropdown .select:focus {
+    color: var(--dropdown-select-hover-color);
+    background-color: var(--dropdown-select-hover-background-color);
+}
+
+.dropdown[data-type="1"] .caret {
+    margin-left: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--dropdown-select-color);
+    transition: transform 300ms;
+}
+
+.dropdown .select:hover .caret {
+    border-top-color: var(--dropdown-select-hover-color);
+}
+
+.dropdown[data-type="1"] .select.clicked {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.dropdown .caret.clicked {
+    transform: rotate(180deg);
+}
+
+.dropdown>.menus {
+    list-style: none;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.dropdown .menu {
+    position: relative;
+    max-height: 500px;
+    overflow-y: scroll;
+    list-style: none;
+    padding: 0.2em 0.5em;
+    color: var(--dropdown-menu-color);
+    background: var(--dropdown-menu-background-color);
+    border: 2px var(--dropdown-menu-border-color) solid;
+    box-shadow: 0 0.5em 3em rgba(0,0,0,0.2);
+    left: 0%;
+    min-width: 100%;
+    white-space: nowrap;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    display: none;
+    z-index: 1;
+}
+
+.dropdown:not([data-type="1"]) .menu {
+    margin-top: 1em;
+}
+
+.dropdown[data-type="1"] .menu {
+    top: 72%;
+}
+
+.dropdown[data-type="2"] .menu {
+    top: 150%;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.dropdown .menu.open {
+    display: block;
+}
+
+.dropdown .menu li {
+    padding: 0.7em 0.5em;
+    margin: 0.3em 0;
+    border-radius: 0.5em;
+    cursor: pointer; 
+    display: flex;
+    justify-content: stretch; 
+    align-items: stretch;  
+}
+
+.dropdown .menu li:hover, .dropdown .menu li:focus {
+    background: var(--dropdown-menu-hover-background-color);
+    color: var(--dropdown-menu-hover-color);
+}
+
+.dropdown .menu li.active {
+    background: var(--dropdown-menu-active-background-color);
+    color: var(--dropdown-menu-active-color);
+}
