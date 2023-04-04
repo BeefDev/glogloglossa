@@ -2,7 +2,7 @@
 An online code editor &amp; executor for the glossa programming language.
 
 # Features
-- Exeuction of "ΓΛΩΣΣΑ" code
+- Execution of "ΓΛΩΣΣΑ" code
 - Additional toggleable extras (normal & native) 
 - Extra compilation into a file (normal extras only)
 - Ability to print the tokens & nodes while executing the program (for debugging)
